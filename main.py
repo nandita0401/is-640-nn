@@ -11,3 +11,18 @@ xs = [
 
 ys = [1.0, -1.0, -1.0, 1.0] #desired targets
 
+for k in range(10):
+
+    #forward pass
+    ypred = [n(x) for  x in xs]
+    loss = sum((yout - ygt)**2 for ygt, yout in zip(ys, yred))
+    
+    #backward pass
+    loss.backward()
+    
+    #update
+    for p in n.parameters():
+        p.data += -0.01 * p.grad
+
+    print(k, loss.data)
+
