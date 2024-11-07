@@ -14,6 +14,7 @@ class Value:
         other = other if isinstance(other, Value) else Value(other)
         out = Value(self.data + other.data, (self, other), '+')
 
+        #backward logic
         def _backward():
             self.grad += out.grad
             other.grad += out.grad
@@ -25,6 +26,7 @@ class Value:
         other = other if isinstance(other, Value) else Value(other)
         out = Value(self.data * other.data, (self, other), '*')
 
+        #backward logic
         def _backward():
             self.grad += other.data * out.grad
             other.grad += self.data * out.grad
@@ -36,6 +38,7 @@ class Value:
         assert isinstance(other, (int, float)), "only supporting int/float powers for now"
         out = Value(self.data**other, (self,), f'**{other}')
 
+        #backward logic
         def _backward():
             self.grad += (other * self.data**(other-1)) * out.grad
         out._backward = _backward
@@ -45,6 +48,7 @@ class Value:
     def relu(self):
         out = Value(0 if self.data < 0 else self.data, (self,), 'ReLU')
 
+        #backward logic
         def _backward():
             self.grad += (out.data > 0) * out.grad
         out._backward = _backward
