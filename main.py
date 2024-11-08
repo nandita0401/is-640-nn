@@ -14,7 +14,7 @@ xs = [
 
 ys = [1.0, -1.0, -1.0, 1.0] #desired targets
 
-for k in range(10):
+for k in range(20):
 
     #forward pass
     ypred = [n(x) for  x in xs]
@@ -28,4 +28,4 @@ for k in range(10):
         p.data += -0.01 * p.grad
 
     print(k, loss.data)
-
+    
